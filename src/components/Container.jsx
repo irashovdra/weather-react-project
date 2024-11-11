@@ -1,16 +1,16 @@
 import styled from "styled-components";
 
 const ContainerBlock = styled.div`
-    outline: 1ps solid red;
+    outline: 1px solid red;
     width: 293px;
-    margin: 50px auto;
+    margin: 0px auto;
     display: block;
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width: 834px) {
         width: 634px;
     }
-    @media screen and (min-width: 1200px) {
+    @media screen and (min-width: 1440px) {
         width: 1140px;
-        margin: 60px auto;
+        margin: 0px auto;
     }
 `;
 
