@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/yasinskislava.github.io/deseptikoni/static/css/main.d65a05c8.css",
-    "main.js": "/yasinskislava.github.io/deseptikoni/static/js/main.3ecfe3b2.js",
-    "static/media/pressure.svg": "/yasinskislava.github.io/deseptikoni/static/media/pressure.46da3d8828cf64eb0a997b2bcb053a03.svg",
-    "static/media/heart.svg": "/yasinskislava.github.io/deseptikoni/static/media/heart.939659c46bff3afd78e3f4b3f062188d.svg",
-    "static/media/visibility.svg": "/yasinskislava.github.io/deseptikoni/static/media/visibility.9072520fd4667d4f4b080eebed1b4f18.svg",
-    "static/media/temperature.svg": "/yasinskislava.github.io/deseptikoni/static/media/temperature.73802dcc92c6242e26e4742e173eedc3.svg",
-    "static/media/humidity.svg": "/yasinskislava.github.io/deseptikoni/static/media/humidity.3cbb4363665fb4db4fc94cc8b2198ea8.svg",
-    "static/media/wind.svg": "/yasinskislava.github.io/deseptikoni/static/media/wind.4641ac7050be9b52d65bee310c4b5707.svg",
-    "static/media/sun.svg": "/yasinskislava.github.io/deseptikoni/static/media/sun.b158ad7cb45d359e1637206e6a3dd2ce.svg",
-    "static/media/refresh.svg": "/yasinskislava.github.io/deseptikoni/static/media/refresh.86e7b11e96a1488d6ce68ff1e91ff012.svg",
-    "static/media/delete.svg": "/yasinskislava.github.io/deseptikoni/static/media/delete.18797c13b261d6a00505338f4c5c4f3f.svg",
-    "index.html": "/yasinskislava.github.io/deseptikoni/index.html",
-    "main.d65a05c8.css.map": "/yasinskislava.github.io/deseptikoni/static/css/main.d65a05c8.css.map",
-    "main.3ecfe3b2.js.map": "/yasinskislava.github.io/deseptikoni/static/js/main.3ecfe3b2.js.map"
+    "main.css": "/deseptikoni/static/css/main.d65a05c8.css",
+    "main.js": "/deseptikoni/static/js/main.9e072296.js",
+    "static/media/pressure.svg": "/deseptikoni/static/media/pressure.46da3d8828cf64eb0a997b2bcb053a03.svg",
+    "static/media/heart.svg": "/deseptikoni/static/media/heart.939659c46bff3afd78e3f4b3f062188d.svg",
+    "static/media/visibility.svg": "/deseptikoni/static/media/visibility.9072520fd4667d4f4b080eebed1b4f18.svg",
+    "static/media/temperature.svg": "/deseptikoni/static/media/temperature.73802dcc92c6242e26e4742e173eedc3.svg",
+    "static/media/humidity.svg": "/deseptikoni/static/media/humidity.3cbb4363665fb4db4fc94cc8b2198ea8.svg",
+    "static/media/wind.svg": "/deseptikoni/static/media/wind.4641ac7050be9b52d65bee310c4b5707.svg",
+    "static/media/sun.svg": "/deseptikoni/static/media/sun.b158ad7cb45d359e1637206e6a3dd2ce.svg",
+    "static/media/refresh.svg": "/deseptikoni/static/media/refresh.86e7b11e96a1488d6ce68ff1e91ff012.svg",
+    "static/media/delete.svg": "/deseptikoni/static/media/delete.18797c13b261d6a00505338f4c5c4f3f.svg",
+    "index.html": "/deseptikoni/index.html",
+    "main.d65a05c8.css.map": "/deseptikoni/static/css/main.d65a05c8.css.map",
+    "main.9e072296.js.map": "/deseptikoni/static/js/main.9e072296.js.map"
   },
   "entrypoints": [
     "static/css/main.d65a05c8.css",
-    "static/js/main.3ecfe3b2.js"
+    "static/js/main.9e072296.js"
   ]
 }
