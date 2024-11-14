@@ -4,12 +4,13 @@ import bin from "../../svgs/delete.svg"
 import heart from "../../svgs/heart.svg"
 import refresh from "../../svgs/refresh.svg"
 import sun from "../../svgs/sun.svg"
-import { useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import temperature from "../../svgs/temperature.svg"
 import pressure from "../../svgs/pressure.svg"
 import wind from "../../svgs/wind.svg"
 import humidity from "../../svgs/humidity.svg"
 import visibility from "../../svgs/visibility.svg"
+import clearSky from "../../svgs/clearSky.svg"
 
 const CardList = styled.ul`
     display: flex;
@@ -282,23 +283,167 @@ const MoreData = styled.div`
     }
 `;
 
+const WeeklyData = styled.div`
+    border-radius: 15px;
+    background: #E8E8E8;
+    padding: 18px 25px 35px;
+    box-sizing: border-box;
+    h3 {
+        margin-left: 18px;
+        font-weight: 600;
+        font-size: 10px;
+        margin-bottom: 25px;
+    }
+    ul {
+        text-align: center;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        column-gap: 43px;
+        row-gap: 35px;
+        li {
+            display: flex;
+            flex-direction: column;
+            border-radius: 10px;
+            background: #D9D9D9;
+            width: 100px;
+            height: 140px;
+            img {
+                width: 30px;
+                height: 30px;
+                display: block;
+                margin: auto; 
+                margin-bottom: 7px;
+            }
+            p {
+                font-size: 10px;
+                font-weight: 500;
+            }
+            p:first-child {
+                margin-top: 10px;
+                margin-bottom: 20px;
+            }
+            span {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 15px;
+            }
+        }
+    }
+    @media screen and (min-width: 834px) {
+        padding: 20px 35px 35px;
+        h3 {
+            margin-left: 10px;
+            margin-bottom: 17px;
+            font-size: 12px;
+        }
+        ul {
+            column-gap: 0px;
+            row-gap: 0px;
+            gap: 17px;
+            li {
+                padding: 0px 16px;
+                box-sizing: border-box;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                width: 564px;
+                height: 40px;
+                img {
+                    width: 35px;
+                    height: 35px;
+                    margin: 0px;
+                }
+                span {
+                    flex-direction: row;
+                    margin: 0px;
+                    align-items: center;
+                    gap: 15px;
+                }
+                p {
+                    font-size: 14px;
+                }
+                p:first-child {
+                    margin: 0px;
+                }
+            }
+        }
+    }
+    @media screen and (min-width: 1440px) {
+        padding: 26px 76px 42px;
+        h3 {
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        ul {
+            gap: 10px;
+            li {
+                padding: 0px 50px;
+                width: 986px;
+                height: 47px;
+            }
+            img {
+                width: 45px;
+                height: 45px;
+            }
+            p {
+                font-size: 16px;
+            }
+            span {
+                gap: 13px;
+            }
+        }
+    }
+`;
+
 
 export default function Weather() {
     const country = useRef("GB");
     const [city, setCity] = useState("London");
+    const [moreData, setMoreData] = useState(false);
+    const [weeklyForecast, setWeeklyForecast] = useState(false);
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const [actualTime, setActualTime] = useState();
 
     const [weatherInfo, setWeatherInfo] = useState({temperature: 0, feelsLike: 0, minTemp: 0, maxTemp: 0, humidity: 0, pressure: 0, visibility: 0, windSpeed: 0});
-    function fetchData() {
-        fetch(`http://api.openweathermap.org/data/2.5/forecast?id=524901&appid=c9400bae708c82b43bfc3a812d020418&q=${city}&units=metric`)
+    const fetchData = useCallback((city) => {
+        fetch(`http://api.openweathermap.org/data/2.5/weather?id=524901&appid=c9400bae708c82b43bfc3a812d020418&q=${city}&units=metric`)
             .then(val => val.json())
             .then(val => {
                 console.log(val);
-                const data = val.list[0].main;
-                country.current = val.city.country;
-                setWeatherInfo({ temperature: data.temp.toFixed(1), feelsLike: data.feels_like.toFixed(1), minTemp: data.temp_min.toFixed(1), maxTemp: data.temp_max.toFixed(1), humidity: data.humidity, pressure: data.pressure, visibility: "Unlimited", windSpeed: val.list[0].wind.speed });
+                const data = val.main;
+                country.current = val.sys.country;
+                setWeatherInfo({ temperature: data.temp.toFixed(1), feelsLike: data.feels_like.toFixed(1), minTemp: data.temp_min.toFixed(1), maxTemp: data.temp_max.toFixed(1), humidity: data.humidity, pressure: data.pressure, visibility: "Unlimited", windSpeed: val.wind.speed });
             });
+    }, []);
+    function getTime() {
+        const date = new Date();
+        let mins = date.getMinutes();
+        let hours = date.getHours();
+        if (mins < 10) {
+            mins = `0${mins}`;
+        }
+        if (hours === 0) {
+            fetchData(city);
+        }
+        if (hours < 10) {
+            hours = `0${hours}`;
+        }
+        setActualTime(`${hours}:${mins}`);
     }
     
+    useEffect(() => {
+        const date = new Date();
+        getTime();
+        fetchData(city);
+        setTimeout(() => {
+            getTime();
+            setInterval(() => {
+                getTime();
+            }, 60000);
+        }, (60 - date.getSeconds()) * 1000);
+    }, [])
+
     return <section>
         <Container>
             <Wrapper>
@@ -308,23 +453,23 @@ export default function Weather() {
                             <li><p>{city}</p></li>
                             <li><p>{country.current}</p></li>
                         </ul>
-                        <h2>14:00</h2>
+                        <h2>{actualTime}</h2>
                         <ul className="options">
                             <li><button className="optionButton">Hourly forecast</button></li>
-                            <li><button className="optionButton">Weekly forecast</button></li>
+                            <li><button className="optionButton" onClick={() => { setWeeklyForecast(prev => !prev); }}>Weekly forecast</button></li>
                         </ul>
-                        <h4>13.10.2023 | Friday</h4>
+                        <h4>{(new Date()).getDate()}.{(new Date()).getMonth()+1}.{(new Date()).getFullYear()} | {daysOfWeek[(new Date()).getDay()]}</h4>
                         <img src={sun} alt="weather" />
                         <h3>{weatherInfo.temperature}℃</h3>
                         <div>
                             <img src={refresh} alt="refresh" />
                             <img src={heart} alt="heart" onClick={(e) => {e.target.style.fill = "red"}}/>
-                            <button className="optionButton" onClick={fetchData}>See more</button>
+                            <button className="optionButton" onClick={() => { setMoreData((prev) => !prev); if(!moreData) fetchData(city); }}>See more</button>
                             <img src={bin} alt="bin" />
                         </div>
                     </li>
                 </CardList>
-                <MoreData>
+                {moreData ? <MoreData>
                     <ul>
                         <li>
                             <p>Feels like</p>
@@ -358,7 +503,76 @@ export default function Weather() {
                             <img src={visibility} alt="visibility" />
                         </li>
                     </ul>
-                </MoreData>
+                </MoreData> : <></>}
+                {weeklyForecast ? <WeeklyData>
+                        <h3>Weekly forecast</h3>
+                        <ul>
+                            <li>
+                                <p>Test</p>
+                                <span>
+                                    <img src={clearSky} alt="weather icon" />
+                                    <p className="temperature">Test</p>
+                                </span>
+                                <p>Test</p>
+                            </li>
+                            <li>
+                                <p>Test</p>
+                                <span>
+                                    <img src={clearSky} alt="weather icon" />
+                                    <p className="temperature">Test</p>
+                                </span>
+                                <p>Test</p>
+                            </li>
+                            <li>
+                                <p>Test</p>
+                                <span>
+                                    <img src={clearSky} alt="weather icon" />
+                                    <p className="temperature">Test</p>
+                                </span>
+                                <p>Test</p>
+                            </li>
+                            <li>
+                                <p>Test</p>
+                                <span>
+                                    <img src={clearSky} alt="weather icon" />
+                                    <p className="temperature">Test</p>
+                                </span>
+                                <p>Test</p>
+                            </li>
+                            <li>
+                                <p>Test</p>
+                                <span>
+                                    <img src={clearSky} alt="weather icon" />
+                                    <p className="temperature">Test</p>
+                                </span>
+                                <p>Test</p>
+                            </li>
+                            <li>
+                                <p>Test</p>
+                                <span>
+                                    <img src={clearSky} alt="weather icon" />
+                                    <p className="temperature">Test</p>
+                                </span>
+                                <p>Test</p>
+                            </li>
+                            <li>
+                                <p>Test</p>
+                                <span>
+                                    <img src={clearSky} alt="weather icon" />
+                                    <p className="temperature">Test</p>
+                                </span>
+                                <p>Test</p>
+                            </li>
+                            <li>
+                                <p>Test</p>
+                                <span>
+                                    <img src={clearSky} alt="weather icon" />
+                                    <p className="temperature">Test</p>
+                                </span>
+                                <p>Test</p>
+                            </li>
+                        </ul>
+                </WeeklyData> : <></>}
             </Wrapper>
         </Container>
     </section>
