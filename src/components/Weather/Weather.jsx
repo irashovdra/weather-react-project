@@ -10,7 +10,7 @@ import pressure from "../../svgs/pressure.svg"
 import wind from "../../svgs/wind.svg"
 import humidity from "../../svgs/humidity.svg"
 import visibility from "../../svgs/visibility.svg"
-import clearSky from "../../svgs/clearSky.svg"
+import { nanoid } from "nanoid"
 
 const CardList = styled.ul`
     display: flex;
@@ -308,6 +308,10 @@ const WeeklyData = styled.div`
             background: #D9D9D9;
             width: 100px;
             height: 140px;
+            transition: 300ms;
+            &:hover {
+                transform: scale(1.02);
+            }
             img {
                 width: 30px;
                 height: 30px;
@@ -342,6 +346,7 @@ const WeeklyData = styled.div`
             row-gap: 0px;
             gap: 17px;
             li {
+                position: relative;
                 padding: 0px 16px;
                 box-sizing: border-box;
                 flex-direction: row;
@@ -355,6 +360,10 @@ const WeeklyData = styled.div`
                     margin: 0px;
                 }
                 span {
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
                     flex-direction: row;
                     margin: 0px;
                     align-items: center;
@@ -404,6 +413,7 @@ export default function Weather() {
     const [weeklyForecast, setWeeklyForecast] = useState(false);
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const [actualTime, setActualTime] = useState();
+    const [weeklyData, setWeeklyData] = useState([]);
 
     const [weatherInfo, setWeatherInfo] = useState({temperature: 0, feelsLike: 0, minTemp: 0, maxTemp: 0, humidity: 0, pressure: 0, visibility: 0, windSpeed: 0});
     const fetchData = useCallback((city) => {
@@ -416,6 +426,35 @@ export default function Weather() {
                 setWeatherInfo({ temperature: data.temp.toFixed(1), feelsLike: data.feels_like.toFixed(1), minTemp: data.temp_min.toFixed(1), maxTemp: data.temp_max.toFixed(1), humidity: data.humidity, pressure: data.pressure, visibility: "Unlimited", windSpeed: val.wind.speed });
             });
     }, []);
+
+    const fetchTotal = useCallback((city) => {
+        fetch(`http://api.weatherapi.com/v1/forecast.json?key=fb25167606234fa5ae1230349241811&q=${city}&days=8&aqi=no&alerts=no`)
+            .then(val => val.json())
+            .then(val => {
+                const data = val.forecast.forecastday;
+                console.log(data);
+                const tempArr = [];
+                data.map(item => {
+                    tempArr.push({ date: item.date_epoch, max: item.day.maxtemp_c, min: item.day.mintemp_c, text: item.day.condition.text, icon: item.day.condition.icon });
+                })
+                setWeeklyData(tempArr);
+            })
+    }, []);
+
+    const WeeklyList =  weeklyData.map(item => {
+        let time = new Date(item.date * 1000);
+        time = String(time).slice(0, 3) + ", " + String(time).slice(4, 10);
+        return (
+          <li key={nanoid()}>
+            <p>{time}</p>
+            <span>
+              <img src={item.icon} alt="weather icon" />
+              <p className="temperature">{item.max}/{item.min}℃</p>
+            </span>
+            <p>{item.text}</p>
+          </li>
+        );
+    })
     function getTime() {
         const date = new Date();
         let mins = date.getMinutes();
@@ -436,6 +475,7 @@ export default function Weather() {
         const date = new Date();
         getTime();
         fetchData(city);
+        fetchTotal(city);
         setTimeout(() => {
             getTime();
             setInterval(() => {
@@ -494,7 +534,7 @@ export default function Weather() {
                         </li>
                         <li>
                             <p>Wind speed</p>
-                            <h3>{weatherInfo.windSpeed} m/s</h3>
+                            <h3>{weatherInfo.windSpeed} km/h</h3>
                             <img src={wind} alt="wind" />
                         </li>
                         <li>
@@ -507,70 +547,7 @@ export default function Weather() {
                 {weeklyForecast ? <WeeklyData>
                         <h3>Weekly forecast</h3>
                         <ul>
-                            <li>
-                                <p>Test</p>
-                                <span>
-                                    <img src={clearSky} alt="weather icon" />
-                                    <p className="temperature">Test</p>
-                                </span>
-                                <p>Test</p>
-                            </li>
-                            <li>
-                                <p>Test</p>
-                                <span>
-                                    <img src={clearSky} alt="weather icon" />
-                                    <p className="temperature">Test</p>
-                                </span>
-                                <p>Test</p>
-                            </li>
-                            <li>
-                                <p>Test</p>
-                                <span>
-                                    <img src={clearSky} alt="weather icon" />
-                                    <p className="temperature">Test</p>
-                                </span>
-                                <p>Test</p>
-                            </li>
-                            <li>
-                                <p>Test</p>
-                                <span>
-                                    <img src={clearSky} alt="weather icon" />
-                                    <p className="temperature">Test</p>
-                                </span>
-                                <p>Test</p>
-                            </li>
-                            <li>
-                                <p>Test</p>
-                                <span>
-                                    <img src={clearSky} alt="weather icon" />
-                                    <p className="temperature">Test</p>
-                                </span>
-                                <p>Test</p>
-                            </li>
-                            <li>
-                                <p>Test</p>
-                                <span>
-                                    <img src={clearSky} alt="weather icon" />
-                                    <p className="temperature">Test</p>
-                                </span>
-                                <p>Test</p>
-                            </li>
-                            <li>
-                                <p>Test</p>
-                                <span>
-                                    <img src={clearSky} alt="weather icon" />
-                                    <p className="temperature">Test</p>
-                                </span>
-                                <p>Test</p>
-                            </li>
-                            <li>
-                                <p>Test</p>
-                                <span>
-                                    <img src={clearSky} alt="weather icon" />
-                                    <p className="temperature">Test</p>
-                                </span>
-                                <p>Test</p>
-                            </li>
+                            {WeeklyList}
                         </ul>
                 </WeeklyData> : <></>}
             </Wrapper>
