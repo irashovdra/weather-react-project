@@ -16,6 +16,7 @@ import { Chart, CategoryScale, LineController, LineElement, PointElement, Linear
 
 Chart.register(CategoryScale, LineController, LineElement, PointElement, LinearScale);
 
+
 const CardList = styled.ul`
     display: flex;
     flex-direction: row;
@@ -73,7 +74,7 @@ const CardList = styled.ul`
             height: 83px;
             margin: 25px auto;
             display: block;
-            
+
         }
         .options {
             display: flex;
@@ -117,7 +118,7 @@ const CardList = styled.ul`
             ul:first-child {
                 margin: 12px 25px;
             }
-            h2{ 
+            h2{
                 margin-bottom: 8px;
             }
             h3 {
@@ -198,6 +199,7 @@ const Wrapper = styled.div`
         padding: 60px 0px 80px;
     }
 `;
+
 
 const MoreData = styled.div`
     background: #E8E8E8;
@@ -621,4 +623,5 @@ export default function Weather() {
         </Container>
     </section>
 }
+
 
