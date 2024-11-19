@@ -1,15 +1,15 @@
 import styled from "styled-components"
 import Container from "../Container"
-import bin from "../../svgs/delete.svg"
-import heart from "../../svgs/heart.svg"
-import refresh from "../../svgs/refresh.svg"
-import sun from "../../svgs/sun.svg"
+import bin from "../../img/svgs/delete.svg"
+import heart from "../../img/svgs/heart.svg"
+import refresh from "../../img/svgs/refresh.svg"
+import sun from "../../img/svgs/sun.svg"
 import { useCallback, useEffect, useRef, useState } from "react"
-import temperature from "../../svgs/temperature.svg"
-import pressure from "../../svgs/pressure.svg"
-import wind from "../../svgs/wind.svg"
-import humidity from "../../svgs/humidity.svg"
-import visibility from "../../svgs/visibility.svg"
+import temperature from "../../img/svgs/temperature.svg"
+import pressure from "../../img/svgs/pressure.svg"
+import wind from "../../img/svgs/wind.svg"
+import humidity from "../../img/svgs/humidity.svg"
+import visibility from "../../img/svgs/visibility.svg"
 import { nanoid } from "nanoid"
 import { Line } from "react-chartjs-2"
 import { Chart, CategoryScale, LineController, LineElement, PointElement, LinearScale } from "chart.js"
@@ -454,7 +454,7 @@ export default function Weather() {
 
     const [weatherInfo, setWeatherInfo] = useState({temperature: 0, feelsLike: 0, minTemp: 0, maxTemp: 0, humidity: 0, pressure: 0, visibility: 0, windSpeed: 0});
     const fetchData = useCallback((city) => {
-        fetch(`http://api.openweathermap.org/data/2.5/weather?id=524901&appid=c9400bae708c82b43bfc3a812d020418&q=${city}&units=metric`)
+        fetch(`https://api.openweathermap.org/data/2.5/weather?id=524901&appid=c9400bae708c82b43bfc3a812d020418&q=${city}&units=metric`)
             .then(val => val.json())
             .then(val => {
                 console.log(val);
@@ -465,7 +465,7 @@ export default function Weather() {
     }, []);
 
     const fetchTotal = useCallback((city) => {
-        fetch(`http://api.weatherapi.com/v1/forecast.json?key=fb25167606234fa5ae1230349241811&q=${city}&days=8&aqi=no&alerts=no`)
+        fetch(`https://api.weatherapi.com/v1/forecast.json?key=fb25167606234fa5ae1230349241811&q=${city}&days=8&aqi=no&alerts=no`)
             .then(val => val.json())
             .then(val => {
               const data = val.forecast.forecastday;
