@@ -1,10 +1,12 @@
-import './App.css';
-import Weather from './components/Weather/Weather';
+import "./App.css";
+import Hero from "./components/Hero/Hero";
+// import Weather from "./components/Weather/Weather";
 
 function App() {
   return (
     <>
-      <Weather></Weather>
+      {/* <Weather></Weather> */}
+      <Hero></Hero>
     </>
   );
 }
