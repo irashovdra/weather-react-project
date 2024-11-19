@@ -11,6 +11,10 @@ import wind from "../../svgs/wind.svg"
 import humidity from "../../svgs/humidity.svg"
 import visibility from "../../svgs/visibility.svg"
 import { nanoid } from "nanoid"
+import { Line } from "react-chartjs-2"
+import { Chart, CategoryScale, LineController, LineElement, PointElement, LinearScale } from "chart.js"
+
+Chart.register(CategoryScale, LineController, LineElement, PointElement, LinearScale);
 
 const CardList = styled.ul`
     display: flex;
@@ -405,15 +409,46 @@ const WeeklyData = styled.div`
     }
 `;
 
+const HourlyData = styled.div`
+    border-radius: 15px;
+    background: #E8E8E8;
+    box-sizing: border-box;
+    padding: 18px 25px 24px;
+    h2 {
+        font-size: 10px;
+        font-weight: 600;
+        margin-bottom: 16px;
+        margin-left: 18px;
+    }
+    @media screen and (min-width: 834px) {
+        padding: 20px 38px 26px;
+        h2 {
+            font-size: 12px;
+            margin-left: 7px;
+            margin-bottom: 28px;
+        }
+    }
+    @media screen and (min-width: 1440px) {
+        padding: 26px 40px 40px;
+        h2 {
+            font-size: 16px;
+            margin-bottom: 20px;
+            margin-left: 37px;
+        }
+    }
+`;
+
 
 export default function Weather() {
     const country = useRef("GB");
     const [city, setCity] = useState("London");
     const [moreData, setMoreData] = useState(false);
     const [weeklyForecast, setWeeklyForecast] = useState(false);
+    const [hourlyForecast, setHourlyForecast] = useState(false);
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const [actualTime, setActualTime] = useState();
     const [weeklyData, setWeeklyData] = useState([]);
+    const [hourlyData, setHourlyData] = useState({});
 
     const [weatherInfo, setWeatherInfo] = useState({temperature: 0, feelsLike: 0, minTemp: 0, maxTemp: 0, humidity: 0, pressure: 0, visibility: 0, windSpeed: 0});
     const fetchData = useCallback((city) => {
@@ -431,13 +466,40 @@ export default function Weather() {
         fetch(`http://api.weatherapi.com/v1/forecast.json?key=fb25167606234fa5ae1230349241811&q=${city}&days=8&aqi=no&alerts=no`)
             .then(val => val.json())
             .then(val => {
-                const data = val.forecast.forecastday;
-                console.log(data);
-                const tempArr = [];
-                data.map(item => {
-                    tempArr.push({ date: item.date_epoch, max: item.day.maxtemp_c, min: item.day.mintemp_c, text: item.day.condition.text, icon: item.day.condition.icon });
-                })
-                setWeeklyData(tempArr);
+              const data = val.forecast.forecastday;
+              const dataMap = data[0].hour;
+              const tempArr = [];
+              data.map((item) => {
+                tempArr.push({
+                  date: item.date_epoch,
+                  max: item.day.maxtemp_c,
+                  min: item.day.mintemp_c,
+                  text: item.day.condition.text,
+                  icon: item.day.condition.icon,
+                });
+                return false;
+              });
+              setWeeklyData(tempArr);
+              const labels = [];
+              const values = [];
+              dataMap.map((item) => {
+                labels.push(item.time.slice(-5));
+                  values.push(item.temp_c);
+                  return false;
+              });
+                console.log(labels, values);
+              setHourlyData({
+                  labels: labels,
+                  datasets: [
+                      {
+                          label: "Temperature",
+                          data: values,
+                          borderColor: "#FFB36C",
+                          borderWidth: 3,
+                          radius: 0
+                      }
+                  ]  
+              });
             })
     }, []);
 
@@ -484,6 +546,7 @@ export default function Weather() {
         }, (60 - date.getSeconds()) * 1000);
     }, [])
 
+
     return <section>
         <Container>
             <Wrapper>
@@ -495,7 +558,7 @@ export default function Weather() {
                         </ul>
                         <h2>{actualTime}</h2>
                         <ul className="options">
-                            <li><button className="optionButton">Hourly forecast</button></li>
+                            <li><button className="optionButton" onClick={() => { setHourlyForecast(prev => !prev); }}>Hourly forecast</button></li>
                             <li><button className="optionButton" onClick={() => { setWeeklyForecast(prev => !prev); }}>Weekly forecast</button></li>
                         </ul>
                         <h4>{(new Date()).getDate()}.{(new Date()).getMonth()+1}.{(new Date()).getFullYear()} | {daysOfWeek[(new Date()).getDay()]}</h4>
@@ -544,6 +607,10 @@ export default function Weather() {
                         </li>
                     </ul>
                 </MoreData> : <></>}
+                {hourlyForecast ? <HourlyData>
+                    <h2>Hourly forecast</h2>
+                    <Line data={hourlyData}></Line>
+                </HourlyData> : <></>}
                 {weeklyForecast ? <WeeklyData>
                         <h3>Weekly forecast</h3>
                         <ul>
@@ -554,3 +621,4 @@ export default function Weather() {
         </Container>
     </section>
 }
+
