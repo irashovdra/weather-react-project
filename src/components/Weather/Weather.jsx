@@ -16,7 +16,6 @@ import { Chart, CategoryScale, LineController, LineElement, PointElement, Linear
 
 Chart.register(CategoryScale, LineController, LineElement, PointElement, LinearScale);
 
-
 const CardList = styled.ul`
     display: flex;
     flex-direction: row;
@@ -200,7 +199,6 @@ const Wrapper = styled.div`
     }
 `;
 
-
 const MoreData = styled.div`
     background: #E8E8E8;
     padding: 35px 43px;
@@ -322,7 +320,7 @@ const WeeklyData = styled.div`
                 width: 30px;
                 height: 30px;
                 display: block;
-                margin: auto; 
+                margin: auto;
                 margin-bottom: 7px;
             }
             p {
@@ -440,7 +438,6 @@ const HourlyData = styled.div`
     }
 `;
 
-
 export default function Weather() {
     const country = useRef("GB");
     const [city, setCity] = useState("London");
@@ -500,7 +497,7 @@ export default function Weather() {
                           borderWidth: 3,
                           radius: 0
                       }
-                  ]  
+                  ]
               });
             })
     }, []);
@@ -534,7 +531,7 @@ export default function Weather() {
         }
         setActualTime(`${hours}:${mins}`);
     }
-    
+
     useEffect(() => {
         const date = new Date();
         getTime();
@@ -547,7 +544,6 @@ export default function Weather() {
             }, 60000);
         }, (60 - date.getSeconds()) * 1000);
     }, [])
-
 
     return <section>
         <Container>
@@ -623,5 +619,3 @@ export default function Weather() {
         </Container>
     </section>
 }
-
-
