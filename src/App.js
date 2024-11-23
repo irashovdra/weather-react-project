@@ -1,14 +1,17 @@
 import "./App.css";
-// import Hero from "./components/Hero/Hero";
 import Slider from "./components/Slider/Slider";
-// import Weather from "./components/Weather/Weather";
+import Hero from "./components/Hero/Hero";
+import Weather from "./components/Weather/Weather";
+import Header from "./components/Header/Header";
+
 
 function App() {
   return (
     <>
+      <Header />
+      <Hero></Hero>
+      <Weather></Weather>
       <Slider></Slider>
-      {/* <Hero></Hero>
-      <Weather></Weather> */}
     </>
   );
 }
