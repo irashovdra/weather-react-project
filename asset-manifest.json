@@ -1,24 +1,28 @@
 {
   "files": {
     "main.css": "/deseptikoni/static/css/main.d65a05c8.css",
-    "main.js": "/deseptikoni/static/js/main.f3d8b3b5.js",
+    "main.js": "/deseptikoni/static/js/main.2b6f612d.js",
     "static/media/search.svg": "/deseptikoni/static/media/search.cee743dff3702a5dc023fd0cd98ec05c.svg",
     "static/media/heroBackground.png": "/deseptikoni/static/media/heroBackground.e126fbe91a161bd5c0bf.png",
     "static/media/pressure.svg": "/deseptikoni/static/media/pressure.449abab0df5413702a893411b0b81070.svg",
+    "static/media/whatsapp.svg": "/deseptikoni/static/media/whatsapp.35ad16fa042ee6caa0de9348012257d3.svg",
+    "static/media/inst.svg": "/deseptikoni/static/media/inst.c2f6281f3f93038bf2b39c0433d094d4.svg",
     "static/media/heart.svg": "/deseptikoni/static/media/heart.617e257d788a6b01b0e460f0d4bbed6d.svg",
     "static/media/visibility.svg": "/deseptikoni/static/media/visibility.6b1471527b38fa828b887f91b87a5bcf.svg",
     "static/media/temperature.svg": "/deseptikoni/static/media/temperature.97c04c9b6faddb78b2637860b96c08ff.svg",
     "static/media/humidity.svg": "/deseptikoni/static/media/humidity.5a59e67703943b882a7fc6a6df904731.svg",
     "static/media/wind.svg": "/deseptikoni/static/media/wind.aaa6a20cccf4c15dae735899e7cc308c.svg",
     "static/media/sun.svg": "/deseptikoni/static/media/sun.cc243c7cfb0f095b5a81c76920adfcf2.svg",
+    "static/media/facebook.svg": "/deseptikoni/static/media/facebook.c883285cad3cb1cdfdf0dab175e67440.svg",
+    "static/media/loop.svg": "/deseptikoni/static/media/loop.c7f33ff1fe8d4c0cd2b365ed4aad8bd1.svg",
     "static/media/refresh.svg": "/deseptikoni/static/media/refresh.6fc39c46a61de07d923b585a21fadefc.svg",
     "static/media/delete.svg": "/deseptikoni/static/media/delete.1d5761fa39907041f9002b265daaecab.svg",
     "index.html": "/deseptikoni/index.html",
     "main.d65a05c8.css.map": "/deseptikoni/static/css/main.d65a05c8.css.map",
-    "main.f3d8b3b5.js.map": "/deseptikoni/static/js/main.f3d8b3b5.js.map"
+    "main.2b6f612d.js.map": "/deseptikoni/static/js/main.2b6f612d.js.map"
   },
   "entrypoints": [
     "static/css/main.d65a05c8.css",
-    "static/js/main.f3d8b3b5.js"
+    "static/js/main.2b6f612d.js"
   ]
 }
