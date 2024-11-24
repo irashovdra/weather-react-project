@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 const ContainerBlock = styled.div`
-    outline: 1px solid red;
     width: 293px;
     margin: 0px auto;
     display: block;

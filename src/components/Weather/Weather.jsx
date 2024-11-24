@@ -4,7 +4,7 @@ import bin from "../../img/svgs/delete.svg"
 import heart from "../../img/svgs/heart.svg"
 import refresh from "../../img/svgs/refresh.svg"
 import sun from "../../img/svgs/sun.svg"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import temperature from "../../img/svgs/temperature.svg"
 import pressure from "../../img/svgs/pressure.svg"
 import wind from "../../img/svgs/wind.svg"
@@ -33,6 +33,10 @@ const CardList = styled.ul`
         &:hover {
             background: #f3aa66;
             transform: scale(1.1);
+        }
+        &.clicked {
+            transition: 150ms;
+            transform: scale(0.95);
         }
     }
     > li {
@@ -98,11 +102,17 @@ const CardList = styled.ul`
                 width: 24px;
                 height: 24px;
                 transition: 300ms;
+                user-select: none;
                 cursor: pointer;
                 &:hover {
                     transform: scale(1.1);
                 }
+                &.clicked {
+                    transition: 150ms;
+                    transform: scale(0.95);  
+                }
             }
+            
             button {
                 width: 84px;
                 height: 27px;
@@ -438,9 +448,9 @@ const HourlyData = styled.div`
     }
 `;
 
-export default function Weather() {
-    const country = useRef("GB");
-    const [city, setCity] = useState("London");
+export default function Weather({ city, uniqueDataBlock }) {
+    const [cities, setCities] = city;
+    const [uniqueData, setUniqueData] = uniqueDataBlock;
     const [moreData, setMoreData] = useState(false);
     const [weeklyForecast, setWeeklyForecast] = useState(false);
     const [hourlyForecast, setHourlyForecast] = useState(false);
@@ -449,16 +459,14 @@ export default function Weather() {
     const [weeklyData, setWeeklyData] = useState([]);
     const [hourlyData, setHourlyData] = useState({});
 
-    const [weatherInfo, setWeatherInfo] = useState({temperature: 0, feelsLike: 0, minTemp: 0, maxTemp: 0, humidity: 0, pressure: 0, visibility: 0, windSpeed: 0});
+    const [weatherInfo, setWeatherInfo] = useState({});
     const fetchData = useCallback((city) => {
-        fetch(`https://api.openweathermap.org/data/2.5/weather?id=524901&appid=c9400bae708c82b43bfc3a812d020418&q=${city}&units=metric`)
+            fetch(`https://api.openweathermap.org/data/2.5/weather?id=524901&appid=c9400bae708c82b43bfc3a812d020418&q=${city}&units=metric`)
             .then(val => val.json())
             .then(val => {
-                console.log(val);
                 const data = val.main;
-                country.current = val.sys.country;
                 setWeatherInfo({ temperature: data.temp.toFixed(1), feelsLike: data.feels_like.toFixed(1), minTemp: data.temp_min.toFixed(1), maxTemp: data.temp_max.toFixed(1), humidity: data.humidity, pressure: data.pressure, visibility: "Unlimited", windSpeed: val.wind.speed });
-            });
+            }); 
     }, []);
 
     const fetchTotal = useCallback((city) => {
@@ -486,7 +494,6 @@ export default function Weather() {
                   values.push(item.temp_c);
                   return false;
               });
-                console.log(labels, values);
               setHourlyData({
                   labels: labels,
                   datasets: [
@@ -516,6 +523,14 @@ export default function Weather() {
           </li>
         );
     })
+
+    function deleteCard(city) {
+        const newList = cities.filter(item => item !== city);
+        setCities(newList);
+        const newData = uniqueData.filter(item => item.city !== city);
+        setUniqueData(newData);
+    }
+
     function getTime() {
         const date = new Date();
         let mins = date.getMinutes();
@@ -524,7 +539,7 @@ export default function Weather() {
             mins = `0${mins}`;
         }
         if (hours === 0) {
-            fetchData(city);
+            fetchData(cities[0]);
         }
         if (hours < 10) {
             hours = `0${hours}`;
@@ -535,40 +550,44 @@ export default function Weather() {
     useEffect(() => {
         const date = new Date();
         getTime();
-        fetchData(city);
-        fetchTotal(city);
+        fetchData(cities[0]);
+        fetchTotal(cities[0]);
         setTimeout(() => {
             getTime();
             setInterval(() => {
                 getTime();
             }, 60000);
         }, (60 - date.getSeconds()) * 1000);
-    }, [])
+    }, []);
+
+    const cardsList = cities.map(city => {
+        return <li key={city}>
+                        <ul>
+                            <li><p>{city}</p></li>
+                            <li><p>{uniqueData.map(obj => {if(obj.city === city) {return obj.country}})}</p></li>
+                        </ul>
+                        <h2>{actualTime}</h2>
+                        <ul className="options">
+                            <li><button className="optionButton" onClick={(e) => { setHourlyForecast(prev => !prev); if(!hourlyForecast) fetchTotal(city); e.target.classList.add("clicked"); setTimeout(() => {e.target.classList.remove("clicked")}, 175)}}>Hourly forecast</button></li>
+                            <li><button className="optionButton" onClick={(e) => { setWeeklyForecast(prev => !prev); if(!weeklyForecast) fetchTotal(city); e.target.classList.add("clicked"); setTimeout(() => {e.target.classList.remove("clicked")}, 175)}}>Weekly forecast</button></li>
+                        </ul>
+                        <h4>{(new Date()).getDate()}.{(new Date()).getMonth()+1}.{(new Date()).getFullYear()} | {daysOfWeek[(new Date()).getDay()]}</h4>
+                        <img src={sun} alt="weather" />
+                        <h3>{uniqueData.map(obj => {if(obj.city === city) {return obj.temp}})}℃</h3>
+                        <div>
+                            <img src={refresh} alt="refresh" onClick={(e) => { fetchData(city); fetchTotal(city); e.target.classList.add("clicked"); setTimeout(() => { e.target.classList.remove("clicked") }, 175); }}/>
+                            <img src={heart} alt="heart" onClick={(e) => {e.target.classList.add("clicked");  setTimeout(() => {e.target.classList.remove("clicked")}, 175)}}/>
+                            <button className="optionButton" onClick={(e) => { e.target.classList.add("clicked"); setTimeout(() => { e.target.classList.remove("clicked") }, 175); setMoreData((prev) => !prev); if(!moreData) fetchData(city)}}>See more</button>
+                            <img src={bin} alt="bin" onClick={(e) => { deleteCard(city);e.target.classList.add("clicked");  setTimeout(() => {e.target.classList.remove("clicked")}, 175)}}/>
+                        </div>
+                    </li>
+    })
 
     return <section>
         <Container>
             <Wrapper>
                 <CardList>
-                    <li>
-                        <ul>
-                            <li><p>{city}</p></li>
-                            <li><p>{country.current}</p></li>
-                        </ul>
-                        <h2>{actualTime}</h2>
-                        <ul className="options">
-                            <li><button className="optionButton" onClick={() => { setHourlyForecast(prev => !prev); }}>Hourly forecast</button></li>
-                            <li><button className="optionButton" onClick={() => { setWeeklyForecast(prev => !prev); }}>Weekly forecast</button></li>
-                        </ul>
-                        <h4>{(new Date()).getDate()}.{(new Date()).getMonth()+1}.{(new Date()).getFullYear()} | {daysOfWeek[(new Date()).getDay()]}</h4>
-                        <img src={sun} alt="weather" />
-                        <h3>{weatherInfo.temperature}℃</h3>
-                        <div>
-                            <img src={refresh} alt="refresh" />
-                            <img src={heart} alt="heart" onClick={(e) => {e.target.style.fill = "red"}}/>
-                            <button className="optionButton" onClick={() => { setMoreData((prev) => !prev); if(!moreData) fetchData(city); }}>See more</button>
-                            <img src={bin} alt="bin" />
-                        </div>
-                    </li>
+                    {cardsList}
                 </CardList>
                 {moreData ? <MoreData>
                     <ul>
