@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/deseptikoni/static/css/main.d65a05c8.css",
-    "main.js": "/deseptikoni/static/js/main.2b6f612d.js",
+    "main.js": "/deseptikoni/static/js/main.4f1c8fe9.js",
     "static/media/search.svg": "/deseptikoni/static/media/search.cee743dff3702a5dc023fd0cd98ec05c.svg",
     "static/media/heroBackground.png": "/deseptikoni/static/media/heroBackground.e126fbe91a161bd5c0bf.png",
     "static/media/pressure.svg": "/deseptikoni/static/media/pressure.449abab0df5413702a893411b0b81070.svg",
@@ -19,10 +19,10 @@
     "static/media/delete.svg": "/deseptikoni/static/media/delete.1d5761fa39907041f9002b265daaecab.svg",
     "index.html": "/deseptikoni/index.html",
     "main.d65a05c8.css.map": "/deseptikoni/static/css/main.d65a05c8.css.map",
-    "main.2b6f612d.js.map": "/deseptikoni/static/js/main.2b6f612d.js.map"
+    "main.4f1c8fe9.js.map": "/deseptikoni/static/js/main.4f1c8fe9.js.map"
   },
   "entrypoints": [
     "static/css/main.d65a05c8.css",
-    "static/js/main.2b6f612d.js"
+    "static/js/main.4f1c8fe9.js"
   ]
 }
