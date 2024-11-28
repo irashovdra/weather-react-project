@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/deseptikoni/static/css/main.d65a05c8.css",
-    "main.js": "/deseptikoni/static/js/main.4f1c8fe9.js",
+    "main.css": "/deseptikoni/static/css/main.141f964b.css",
+    "main.js": "/deseptikoni/static/js/main.8d12d314.js",
     "static/media/search.svg": "/deseptikoni/static/media/search.cee743dff3702a5dc023fd0cd98ec05c.svg",
     "static/media/heroBackground.png": "/deseptikoni/static/media/heroBackground.e126fbe91a161bd5c0bf.png",
     "static/media/pressure.svg": "/deseptikoni/static/media/pressure.449abab0df5413702a893411b0b81070.svg",
@@ -18,11 +18,13 @@
     "static/media/refresh.svg": "/deseptikoni/static/media/refresh.6fc39c46a61de07d923b585a21fadefc.svg",
     "static/media/delete.svg": "/deseptikoni/static/media/delete.1d5761fa39907041f9002b265daaecab.svg",
     "index.html": "/deseptikoni/index.html",
-    "main.d65a05c8.css.map": "/deseptikoni/static/css/main.d65a05c8.css.map",
-    "main.4f1c8fe9.js.map": "/deseptikoni/static/js/main.4f1c8fe9.js.map"
+    "static/media/chevron-left.svg": "/deseptikoni/static/media/chevron-left.982a40d4f9e3cf9fdaeaf4af9da46c14.svg",
+    "static/media/chevron-right.svg": "/deseptikoni/static/media/chevron-right.d45fd2f46e93f5c3aa0a7d0617d9fecf.svg",
+    "main.141f964b.css.map": "/deseptikoni/static/css/main.141f964b.css.map",
+    "main.8d12d314.js.map": "/deseptikoni/static/js/main.8d12d314.js.map"
   },
   "entrypoints": [
-    "static/css/main.d65a05c8.css",
-    "static/js/main.4f1c8fe9.js"
+    "static/css/main.141f964b.css",
+    "static/js/main.8d12d314.js"
   ]
 }
