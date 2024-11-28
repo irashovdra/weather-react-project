@@ -7,7 +7,7 @@ import right from "../../img/svgs/chevron-right.svg"
 let list = [{largeImageURL: "./", id: 124},{largeImageURL: "./", id: 125},{largeImageURL: "./", id: 126},{largeImageURL: "./", id: 127},{largeImageURL: "./", id: 128}];
 export default function Slider() {
     function getImages() {
-        fetch("https://pixabay.com/api/?key=43085062-83502d00c5fb8aeb01fe37f91&min_width=6000")
+        fetch("https://pixabay.com/api/?key=43085062-83502d00c5fb8aeb01fe37f91&min_width=6000&q=forest")
             .then(val => val.json())
             .then(val => {
                 list = val.hits;
