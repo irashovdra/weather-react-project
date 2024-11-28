@@ -1,80 +1,111 @@
-// import { useState } from "react";
-// import styled from "styled-components";
-// import slider1 from "../../img/slider1.png";
-// import slider2 from "../../img/slider2.png";
-// import slider3 from "../../img/slider3.png";
-// import slider4 from "../../img/slider4.png";
-// import slider5 from "../../img/slider5.png";
+import { useEffect, useState } from "react";
+import Container from "../Container";
+import styled from "styled-components";
+import left from "../../img/svgs/chevron-left.svg"
+import right from "../../img/svgs/chevron-right.svg"
 
-// const images = [slider1, slider2, slider3, slider4, slider5];
+let list = [{largeImageURL: "./", id: 124},{largeImageURL: "./", id: 125},{largeImageURL: "./", id: 126},{largeImageURL: "./", id: 127},{largeImageURL: "./", id: 128}];
+export default function Slider() {
+    function getImages() {
+        fetch("https://pixabay.com/api/?key=43085062-83502d00c5fb8aeb01fe37f91&min_width=6000")
+            .then(val => val.json())
+            .then(val => {
+                list = val.hits;
+                setShow(true);
+                updateList();
+            });
+    }
+    function updateList() {
+        const tempArr = [];
+        for (let i = ((index + 18) % 20); i <= ((index + 22) % 20); i++){
+            tempArr.push(list[i]);
+        }
+        setActualList(tempArr);
+    }
+    const [actualList, setActualList] = useState([]);
+    const [index, setIndex] = useState(2);
+    const [show, setShow] = useState(false);
+    useEffect(() => {
+        getImages();
+    }, []);
 
-// const SliderSection = () => {
-//   const [currentIndex, setCurrentIndex] = useState(2);
+    useEffect(() => {
+        updateList(); 
+    }, [index]);
+    
+    return <div style={{marginTop: "80px"}}>
+        <Container>
+            <h2 style={{ marginBottom: "40px" }}>Beautiful nature</h2>
+            <Arrow onClick={() => { setIndex(prev => prev - 1) }}><img src={left} alt="left" /></Arrow>
+            {show ? <SliderList>
+                {actualList.map(item => {
+                    return <li key={item.id}><img src={item.largeImageURL} alt="component" /></li>
+                })} 
+            </SliderList> : <></>}
+            <Arrow onClick={() => { setIndex(prev => prev + 1) }}><img src={right} alt="right" /></Arrow>
+        </Container>
+    </div>
+}
 
-//   const handleMouseOver = (index) => {
-//     setCurrentIndex(index);
-//   };
+const SliderList = styled.ul`
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  padding: 35px 100px;
+  justify-content: space-between;
+  align-items: center;
+  height: 384px;
+  li {
+    width: 248px;
+    height: 136px;
+    transition: 300ms;
+    &:nth-child(2n){
+        width: 310px;
+        height: 170px;
+        position: absolute;
+        left: 25%;
+        transform: translateX(-25%);
+        z-index: 2;
+    }
+    &:nth-child(4n){
+        left: 75%;
+        transform: translateX(-75%);
+    }
+    &:nth-child(3n){
+        width: 384px;
+        height: 211px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 4;
+    }
+    img {
+        width: 100%;
+        height: 100%;
+    }
+  }
+`;
 
-//   return (
-//     <Section>
-//       <Title>Beautiful nature</Title>
-//       <Slider>
-//         {images.map((src, index) => (
-//           <Slide
-//             key={index}
-//             active={index === currentIndex}
-//             position={index - currentIndex}
-//             onMouseOver={() => handleMouseOver(index)}
-//           >
-//             <Image src={src} alt={`Slide ${index + 1}`} />
-//           </Slide>
-//         ))}
-//       </Slider>
-//     </Section>
-//   );
-// };
-
-// export default SliderSection;
-
-// // Styled Components
-// const Section = styled.div`
-//   text-align: center;
-//   padding: 20px;
-// `;
-
-// const Title = styled.h2`
-//   color: #000;
-//   font-family: Montserrat, sans-serif;
-//   font-size: 20px;
-//   font-weight: 500;
-//   line-height: normal;
-// `;
-
-// const Slider = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   position: relative;
-//   height: 250px;
-//   width: 100%;
-//   overflow: hidden;
-// `;
-
-// const Slide = styled.div`
-//   position: absolute;
-//   top: 50%;
-//   left: 50%;
-//   transform: ${({ position, active }) =>
-//     `translate(${position * 160}px, -50%) ${
-//       active ? "scale(1.2)" : "scale(0.8)"
-//     }`};
-//   z-index: ${({ active }) => (active ? 2 : 1)};
-//   opacity: ${({ active }) => (active ? 1 : 0.6)};
-//   transition: all 0.3s ease-in-out;
-//   filter: ${({ active }) => (active ? "none" : "blur(2px)")};
-// `;
-
-// const Image = styled.img`
-//   width: 384px;
-//   height: 211px;
-// `;
+const Arrow = styled.button`
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    z-index: 99;
+    top: calc(50% + 40px);
+    transform: translateY(-50%);
+    padding: 0;
+    margin: 0;
+    border: none;
+    background-color: transparent;
+    left: 0;
+    &:last-child {
+        left: calc(100% - 40px);
+    }
+    img {
+        width: 100%;
+        height: 100%;
+    }
+`;

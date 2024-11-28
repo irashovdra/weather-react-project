@@ -90,11 +90,7 @@ const Hero = ({ setLocation, proc, proc2 }) => {
             the weather.
           </Description>
           <VerticalLine />
-          <Data>
-            {months[currentDate.getMonth()]} {currentDate.getFullYear()}
-            <br />
-            {weekdays[currentDate.getDay()]}, {`${day}${suffix}`}
-          </Data>
+          <Data>{months[currentDate.getMonth()]} {currentDate.getFullYear()}<br />{weekdays[currentDate.getDay()]}, {`${day}${suffix}`}</Data>
         </TextHero>
         <SearchForm onSubmit={handleFormSubmit}>
           {showDrop ? <SearchDrop>
@@ -210,7 +206,7 @@ const Overlay = styled.div`
 
 const Title = styled.h1`
   color: #fff;
-  font-family: Montserrat, sans-serif;
+  font-family: "Montserrat";
   font-size: 40px;
   margin: 0;
   animation: ${fadeIn} 1s ease-out;
@@ -225,7 +221,7 @@ const TextHero = styled.div`
 
 const Description = styled.p`
   color: #fff;
-  font-family: Montserrat, sans-serif;
+  font-family: "Montserrat";
   font-size: 24px;
   font-weight: 500;
   line-height: 1.5;
@@ -241,7 +237,7 @@ const VerticalLine = styled.div`
 
 const Data = styled.p`
   color: #fff;
-  font-family: Montserrat, sans-serif;
+  font-family: "Montserrat";
   font-size: 24px;
   font-weight: 600;
   margin-left: 20px;

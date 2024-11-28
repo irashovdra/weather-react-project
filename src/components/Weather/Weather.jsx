@@ -578,7 +578,7 @@ export default function Weather({ city, uniqueDataBlock }) {
                             <img src={refresh} alt="refresh" onClick={(e) => { fetchData(city); fetchTotal(city); e.target.classList.add("clicked"); setTimeout(() => { e.target.classList.remove("clicked") }, 175); }}/>
                             <img src={heart} alt="heart" onClick={(e) => {e.target.classList.add("clicked");  setTimeout(() => {e.target.classList.remove("clicked")}, 175)}}/>
                             <button className="optionButton" onClick={(e) => { e.target.classList.add("clicked"); setTimeout(() => { e.target.classList.remove("clicked") }, 175); setMoreData((prev) => !prev); if(!moreData) fetchData(city)}}>See more</button>
-                <img src={bin} alt="bin" onClick={(e) => { deleteCard(city); e.target.classList.add("clicked"); setTimeout(() => { e.target.classList.remove("clicked") }, 175); setMoreData(false); setHourlyForecast(false);  setWeeklyForecast(false)}}/>
+                            <img src={bin} alt="bin" onClick={(e) => { deleteCard(city); e.target.classList.add("clicked"); setTimeout(() => { e.target.classList.remove("clicked") }, 175); setMoreData(false); setHourlyForecast(false);  setWeeklyForecast(false)}}/>
                         </div>
                     </li>
     })
