@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/deseptikoni/static/css/main.141f964b.css",
-    "main.js": "/deseptikoni/static/js/main.d5d12a5d.js",
+    "main.js": "/deseptikoni/static/js/main.9391f2fc.js",
     "static/media/search.svg": "/deseptikoni/static/media/search.cee743dff3702a5dc023fd0cd98ec05c.svg",
     "static/media/heroBackground.png": "/deseptikoni/static/media/heroBackground.e126fbe91a161bd5c0bf.png",
     "static/media/pressure.svg": "/deseptikoni/static/media/pressure.449abab0df5413702a893411b0b81070.svg",
@@ -21,10 +21,10 @@
     "static/media/chevron-left.svg": "/deseptikoni/static/media/chevron-left.982a40d4f9e3cf9fdaeaf4af9da46c14.svg",
     "static/media/chevron-right.svg": "/deseptikoni/static/media/chevron-right.d45fd2f46e93f5c3aa0a7d0617d9fecf.svg",
     "main.141f964b.css.map": "/deseptikoni/static/css/main.141f964b.css.map",
-    "main.d5d12a5d.js.map": "/deseptikoni/static/js/main.d5d12a5d.js.map"
+    "main.9391f2fc.js.map": "/deseptikoni/static/js/main.9391f2fc.js.map"
   },
   "entrypoints": [
     "static/css/main.141f964b.css",
-    "static/js/main.d5d12a5d.js"
+    "static/js/main.9391f2fc.js"
   ]
 }
