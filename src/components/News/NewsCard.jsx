@@ -3,9 +3,8 @@ import styled from "styled-components";
 
 const CardContainer = styled.div`
   display: flex;
-  flex-wrap:wrap;
+  flex-wrap: wrap;
   gap: 20px;
- 
 `;
 
 const CardContent = styled.div`
@@ -13,9 +12,9 @@ const CardContent = styled.div`
 `;
 
 const CardImg = styled.img`
-  width: 270px;
-  height: 208px;
-  flex-shrink: 0;
+  width: 100%;
+  height: 208px; 
+  object-fit: cover; 
   border-radius: 10px;
 `;
 

@@ -64,11 +64,9 @@ const TextContainer = styled.div`
   }
 `;
 
-const User = styled.img`
-    
-`
+const User = styled.img``;
 
-const Header = () => {
+const Header = ({ setIsLoggedIn }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userName, setUserName] = useState("");
 
@@ -76,6 +74,7 @@ const Header = () => {
   const handleModalClose = (name) => {
     setUserName(name);
     setIsModalOpen(false);
+    setIsLoggedIn(true); 
   };
 
   return (
@@ -92,7 +91,7 @@ const Header = () => {
         ) : (
           <LoginBtn onClick={handleSignUp}>Sign Up</LoginBtn>
         )}
-        <User src={user}/>
+        <User src={user} />
       </HeaderContainer>
       {isModalOpen && <HeaderModal onClose={handleModalClose} />}
     </>

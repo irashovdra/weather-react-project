@@ -4,11 +4,7 @@ import NewsCard from "./NewsCard";
 import Container from "../Container";
 
 const NewsContainer = styled.div`
-  /* margin: 0 4%;
-  display: flex;
-  flex-direction: column;
 
-  justify-content: center; */
 `;
 
 const NewsTitle = styled.h2`
@@ -73,19 +69,18 @@ const News = () => {
 
   return (
     <Container>
-
-    <NewsContainer>
-      <NewsTitle>Interacting with our pets</NewsTitle>
-      <NewsContent>
-        <NewsCard articlesToShow={articles.slice(0, visibleCount)} />
-      </NewsContent>
-      {visibleCount < articles.length && (
+      <NewsContainer>
+        <NewsTitle>Interacting with our pets</NewsTitle>
+        <NewsContent>
+          <NewsCard articlesToShow={articles.slice(0, visibleCount)} />
+        </NewsContent>
+        {visibleCount < articles.length && (
           <ButtonContainer>
-          <NewsBtn onClick={handleSeeMore}>See More</NewsBtn>
-        </ButtonContainer>
-      )}
-    </NewsContainer>
-      </Container>
+            <NewsBtn onClick={handleSeeMore}>See More</NewsBtn>
+          </ButtonContainer>
+        )}
+      </NewsContainer>
+    </Container>
   );
 };
 
