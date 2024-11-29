@@ -24,14 +24,24 @@ const Modal = styled.div`
   align-items: center;
   padding: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+
+  @media (max-width: 600px) {
+    width: 293px;
+    height: 454px;
+    padding: 15px;
+  }
 `;
 
 const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 600px;
+  width: 100%;
   height: auto;
+
+  @media (max-width: 600px) {
+    height: 100%;
+  }
 `;
 
 const ModalTitle = styled.h1`
@@ -40,6 +50,10 @@ const ModalTitle = styled.h1`
   font-size: 28px;
   font-weight: 500;
   margin-bottom: 20px;
+
+  @media (max-width: 600px) {
+    font-size: 22px;
+  }
 `;
 
 const ModalLabel = styled.label`
@@ -48,6 +62,10 @@ const ModalLabel = styled.label`
   font-size: 14px;
   font-weight: 500;
   margin: 10px 0;
+
+  @media (max-width: 600px) {
+    font-size: 12px;
+  }
 `;
 
 const ModalInput = styled.input`
@@ -58,6 +76,12 @@ const ModalInput = styled.input`
   margin-bottom: 20px;
   padding: 0 10px;
   border: none;
+
+  @media (max-width: 600px) {
+    width: 260px;
+    height: 40px;
+    font-size: 14px;
+  }
 `;
 
 const ModalBtn = styled.button`
@@ -74,6 +98,11 @@ const ModalBtn = styled.button`
   margin-bottom: 10px;
   border: none;
   cursor: pointer;
+
+  @media (max-width: 600px) {
+    padding: 8px 20px;
+    font-size: 12px;
+  }
 `;
 
 const ModalText = styled.p`
@@ -82,6 +111,10 @@ const ModalText = styled.p`
   font-size: 10px;
   font-weight: 500;
   text-align: center;
+
+  @media (max-width: 600px) {
+    font-size: 9px;
+  }
 `;
 
 const HeaderModal = ({ onClose }) => {
