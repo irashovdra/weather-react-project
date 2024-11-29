@@ -4,7 +4,7 @@ import NewsCard from "./NewsCard";
 import Container from "../Container";
 
 const NewsContainer = styled.div`
- @media (max-width: 768px) {
+ @media (max-width: 834px) {
     display:none;
   }
 `;
