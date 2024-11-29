@@ -4,7 +4,9 @@ import NewsCard from "./NewsCard";
 import Container from "../Container";
 
 const NewsContainer = styled.div`
-
+ @media (max-width: 768px) {
+    display:none;
+  }
 `;
 
 const NewsTitle = styled.h2`
