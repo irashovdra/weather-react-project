@@ -59,7 +59,7 @@ const TextContainer = styled.div`
   gap: 42px;
   margin-left: 111px;
   margin-right: 519px;
-  @media (max-width: 834px) {
+  @media (min-width: 834px) {
     margin-right: 153px;
   }
 `;

@@ -27,6 +27,14 @@ export default function Slider() {
     const [show, setShow] = useState(false);
     useEffect(() => {
         getImages();
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "ArrowRight") {
+                setIndex((prev) => prev + 1);
+            }
+            else if (e.key === "ArrowLeft") {
+                setIndex((prev) => prev - 1);
+            }
+        });
     }, []);
 
     useEffect(() => {

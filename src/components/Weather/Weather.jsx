@@ -20,6 +20,7 @@ const CardList = styled.ul`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: center;
     .optionButton {
         font-family: inherit;
         font-size: 9px;

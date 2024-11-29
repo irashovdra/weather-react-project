@@ -50,7 +50,7 @@ export default Footer;
 const FooterContainer = styled.footer`
   background: #ffb36c;
   padding: 30px 0;
-  margin-top: 50px;
+
 
   @media (min-width: 654px) {
     padding: 35px 0;
@@ -58,7 +58,6 @@ const FooterContainer = styled.footer`
 
   @media (min-width: 1170px) {
     padding: 40px 0 64px;
-    margin-top: 48px;
   }
 `;
 
