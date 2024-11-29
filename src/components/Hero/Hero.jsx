@@ -321,7 +321,6 @@ const SearchInput = styled.input`
   }
   @media screen and (min-width: 768px) {
     width: 373px;
-    height: 27px;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     padding-top: 8px;
@@ -364,7 +363,7 @@ const SearchButton = styled.button`
 
   @media (min-width: 768px) {
     width: 29.4px;
-    height: 27px;
+    height: 29px;
     border-radius: 0 10px 10px 0;
 
     & img {
