@@ -59,6 +59,9 @@ const TextContainer = styled.div`
   gap: 42px;
   margin-left: 111px;
   margin-right: 519px;
+  @media (max-width: 768px) {
+    margin-right: 153px;
+  }
 `;
 
 const User = styled.img`
