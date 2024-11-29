@@ -6,33 +6,16 @@ import loop from "../../img/svgs/loop.svg";
 import cities from "../../top-1000-cities.json";
 import { nanoid } from "nanoid";
 
-const citiesNames = cities.map((item) => item.name).sort();
+const citiesNames = [];
+cities.map((item) => {
+  citiesNames.push(item.name);
+});
+citiesNames.sort();
 
 const Hero = ({ setLocation, proc, proc2 }) => {
   const currentDate = new Date();
-  const weekdays = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+  const weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday",];
+  const months = ["January","February","March","April","May","June","July","August","September","October","November","December",];
 
   const [uniqueData, setUniqueData] = proc2;
   const [showDrop, setShowDrop] = useState(false);
@@ -43,61 +26,52 @@ const Hero = ({ setLocation, proc, proc2 }) => {
     day % 10 < 4 && (day % 100) - (day % 10) !== 10 ? day % 10 : 0
   ];
 
-  const fetchCountry = useCallback(
-    (city) => {
-      fetch(
-        `https://api.openweathermap.org/data/2.5/weather?id=524901&appid=c9400bae708c82b43bfc3a812d020418&q=${city}&units=metric`
-      )
-        .then((val) => val.json())
-        .then((val) => {
-          const doesExist = uniqueData.some((obj) => obj.city === city);
-          const newData = {
-            city: city,
-            country: val.sys.country,
-            temp: val.main.temp.toFixed(1),
-          };
-
-          if (!doesExist) {
-            setUniqueData((prev) => [...prev, newData]);
-          } else {
-            setUniqueData((prev) =>
-              prev.map((obj) => (obj.city === city ? newData : obj))
-            );
-          }
-        });
-    },
-    [uniqueData, setUniqueData]
-  );
+  const fetchCountry = useCallback((city) => {
+    fetch(`https://api.openweathermap.org/data/2.5/weather?id=524901&appid=c9400bae708c82b43bfc3a812d020418&q=${city}&units=metric`)
+      .then(val => val.json())
+      .then(val => {
+                let doesExist = false;
+                const newList = uniqueData.map(obj => {
+                    if (obj.city === city) {
+                        doesExist = true;
+                        return {city: city, country: val.sys.country, temp: val.main.temp.toFixed(1)}
+                    } else {
+                        return obj;
+                    }
+                })
+                if (!doesExist) {
+                    setUniqueData([...uniqueData, { city: city, country: val.sys.country, temp: val.main.temp.toFixed(1) }])
+                }
+                else {
+                    setUniqueData(newList);
+                }
+            })
+    })
 
   useEffect(() => {
     fetchCountry("London");
-  }, [fetchCountry]);
+  }, []);
 
   function drop(list) {
     const len = Math.min(4, passedCities.length);
-    const rawList = passedCities.slice(0, len);
+    const rawList = passedCities.splice(0, len);
     if (len) {
-      return rawList.map((city) => (
-        <li
-          onClick={(e) => {
-            fetchCountry(city);
-            proc((prev) => {
-              if (!prev.includes(city)) {
-                return [...prev, city];
-              } else {
-                return [...prev];
-              }
-            });
-            e.target.closest("form").children[1].value = "";
-          }}
-          key={nanoid()}
-        >
-          <img src={loop} alt="search" />
-          {city}
-        </li>
-      ));
-    } else {
-      return <li>No cities found</li>;
+      return rawList.map(city => {
+        return <li onClick={(e) => {
+          fetchCountry(city);
+          proc((prev) => {
+            if (!prev.includes(city))
+            {
+              return [...prev, city]
+            } else {
+              return [...prev]
+            }
+          }); e.target.closest("form").children[1].value = "";
+        }} key={nanoid()}><img src={loop} alt="search" />{city}</li>
+      });
+    }
+    else {
+      return <li>No cities found</li>
     }
   }
 
@@ -135,15 +109,17 @@ const Hero = ({ setLocation, proc, proc2 }) => {
             onBlur={(e) => {
               setTimeout(() => {
                 setShowDrop(false);
-                e.target.closest("input").style.borderRadius =
-                  "10px 0px 0px 10px";
+                e.target.closest("input").style.borderRadius = "10px 0px 0px 10px";
               }, 100);
             }}
             onInput={(e) => {
               const q = e.target.value;
-              const tempArr = citiesNames.filter((city) =>
-                city.toLocaleLowerCase().includes(q.toLocaleLowerCase())
-              );
+              const tempArr = [];
+              citiesNames.map((city) => {
+                if (city.toLocaleLowerCase().includes(q.toLocaleLowerCase())) {
+                  tempArr.push(city);
+                }
+              });
               setPassedCities(tempArr);
             }}
           />
@@ -321,7 +297,6 @@ const SearchInput = styled.input`
   }
   @media screen and (min-width: 768px) {
     width: 373px;
-    height: 27px;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     padding-top: 8px;
@@ -364,7 +339,7 @@ const SearchButton = styled.button`
 
   @media (min-width: 768px) {
     width: 29.4px;
-    height: 27px;
+    height: 29px;
     border-radius: 0 10px 10px 0;
 
     & img {

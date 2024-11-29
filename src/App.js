@@ -12,7 +12,7 @@ function App() {
   const [uniqueData, setUniqueData] = useState([]);
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <Hero proc={setCity} proc2={[uniqueData, setUniqueData]}></Hero>
       <Weather city={[city, setCity]} uniqueDataBlock={[uniqueData, setUniqueData]}></Weather>
       <News></News>

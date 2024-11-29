@@ -33,7 +33,7 @@ export default function Slider() {
         updateList(); 
     }, [index]);
     
-    return <div style={{marginTop: "80px"}}>
+    return <SliderBlock style={{marginTop: "80px"}}>
         <Container>
             <h2 style={{ marginBottom: "40px" }}>Beautiful nature</h2>
             <Arrow onClick={() => { setIndex(prev => prev - 1) }}><img src={left} alt="left" /></Arrow>
@@ -44,7 +44,7 @@ export default function Slider() {
             </SliderList> : <></>}
             <Arrow onClick={() => { setIndex(prev => prev + 1) }}><img src={right} alt="right" /></Arrow>
         </Container>
-    </div>
+    </SliderBlock>
 }
 
 const SliderList = styled.ul`
@@ -108,4 +108,10 @@ const Arrow = styled.button`
         width: 100%;
         height: 100%;
     }
+`;
+
+const SliderBlock = styled.div`
+    @media screen and (max-width: 1440px) {
+        display: none;
+    }  
 `;
