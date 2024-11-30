@@ -73,7 +73,7 @@ const FooterContent = styled.div`
 `;
 
 const LogoContainer = styled.div`
-  margin-bottom: 100px;
+
   flex-shrink: 0;
   margin-left: 50px;
   width: 50px;

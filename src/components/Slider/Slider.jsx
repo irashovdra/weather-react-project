@@ -64,6 +64,7 @@ const SliderList = styled.ul`
   padding: 35px 100px;
   justify-content: space-between;
   align-items: center;
+  user-select: none;
   height: 384px;
   li {
     width: 248px;
