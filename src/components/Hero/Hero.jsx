@@ -14,8 +14,29 @@ citiesNames.sort();
 
 const Hero = ({ setLocation, proc, proc2 }) => {
   const currentDate = new Date();
-  const weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday",];
-  const months = ["January","February","March","April","May","June","July","August","September","October","November","December",];
+  const weekdays = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
 
   const [uniqueData, setUniqueData] = proc2;
   const [showDrop, setShowDrop] = useState(false);
@@ -27,26 +48,38 @@ const Hero = ({ setLocation, proc, proc2 }) => {
   ];
 
   const fetchCountry = useCallback((city) => {
-    fetch(`https://api.openweathermap.org/data/2.5/weather?id=524901&appid=c9400bae708c82b43bfc3a812d020418&q=${city}&units=metric`)
-      .then(val => val.json())
-      .then(val => {
-                let doesExist = false;
-                const newList = uniqueData.map(obj => {
-                    if (obj.city === city) {
-                        doesExist = true;
-                        return {city: city, country: val.sys.country, temp: val.main.temp.toFixed(1)}
-                    } else {
-                        return obj;
-                    }
-                })
-                if (!doesExist) {
-                    setUniqueData([...uniqueData, { city: city, country: val.sys.country, temp: val.main.temp.toFixed(1) }])
-                }
-                else {
-                    setUniqueData(newList);
-                }
-            })
-    })
+    fetch(
+      `https://api.openweathermap.org/data/2.5/weather?id=524901&appid=c9400bae708c82b43bfc3a812d020418&q=${city}&units=metric`
+    )
+      .then((val) => val.json())
+      .then((val) => {
+        let doesExist = false;
+        const newList = uniqueData.map((obj) => {
+          if (obj.city === city) {
+            doesExist = true;
+            return {
+              city: city,
+              country: val.sys.country,
+              temp: val.main.temp.toFixed(1),
+            };
+          } else {
+            return obj;
+          }
+        });
+        if (!doesExist) {
+          setUniqueData([
+            ...uniqueData,
+            {
+              city: city,
+              country: val.sys.country,
+              temp: val.main.temp.toFixed(1),
+            },
+          ]);
+        } else {
+          setUniqueData(newList);
+        }
+      });
+  });
 
   useEffect(() => {
     fetchCountry("London");
@@ -56,22 +89,29 @@ const Hero = ({ setLocation, proc, proc2 }) => {
     const len = Math.min(4, passedCities.length);
     const rawList = passedCities.splice(0, len);
     if (len) {
-      return rawList.map(city => {
-        return <li onClick={(e) => {
-          fetchCountry(city);
-          proc((prev) => {
-            if (!prev.includes(city))
-            {
-              return [...prev, city]
-            } else {
-              return [...prev]
-            }
-          }); e.target.closest("form").children[1].value = "";
-        }} key={nanoid()}><img src={loop} alt="search" />{city}</li>
+      return rawList.map((city) => {
+        return (
+          <li
+            onClick={(e) => {
+              fetchCountry(city);
+              proc((prev) => {
+                if (!prev.includes(city)) {
+                  return [...prev, city];
+                } else {
+                  return [...prev];
+                }
+              });
+              e.target.closest("form").children[1].value = "";
+            }}
+            key={nanoid()}
+          >
+            <img src={loop} alt="search" />
+            {city}
+          </li>
+        );
       });
-    }
-    else {
-      return <li>No cities found</li>
+    } else {
+      return <li>No cities found</li>;
     }
   }
 
@@ -86,8 +126,8 @@ const Hero = ({ setLocation, proc, proc2 }) => {
         <Title>Weather dashboard</Title>
         <TextHero>
           <Description>
-            Create your personal list of favorite cities and always be aware of
-            the weather.
+            Create your personal list<br></br> of favorite cities and<br></br>
+            always be aware of the <br></br> weather.
           </Description>
           <VerticalLine />
           <Data>
@@ -109,7 +149,8 @@ const Hero = ({ setLocation, proc, proc2 }) => {
             onBlur={(e) => {
               setTimeout(() => {
                 setShowDrop(false);
-                e.target.closest("input").style.borderRadius = "10px 0px 0px 10px";
+                e.target.closest("input").style.borderRadius =
+                  "10px 0px 0px 10px";
               }, 100);
             }}
             onInput={(e) => {
@@ -146,20 +187,21 @@ const fadeIn = keyframes`
 `;
 
 const HeroContainer = styled.div`
+  width: 100%;
+  height: 223px;
+  flex-shrink: 0;
   position: relative;
   text-align: center;
   color: white;
-  width: 100%;
-  height: 595px;
   background: url(${heroBackground}) no-repeat center;
   background-size: cover;
 
-  @media (max-width: 1199px) {
+  @media (min-width: 1440px) {
     padding: 40px 0;
     height: 445px;
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: 834px) {
     padding: 50px 0 100px;
     height: 345px;
   }
@@ -180,19 +222,33 @@ const Overlay = styled.div`
 
 const Title = styled.h1`
   color: #fff;
-  font-family: "Montserrat";
-  font-size: 20px;
-  margin-bottom: 35px;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
   animation: ${fadeIn} 1s ease-out;
-
-  @media (min-width: 768px) {
-    font-size: 30px;
+  margin-bottom: 35px;
+  @media (min-width: 834px) {
+    color: #fff;
+    font-family: Montserrat;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
     margin-bottom: 50px;
   }
 
-  @media (min-width: 1200px) {
-    font-size: 40px;
+  @media (min-width: 1440px) {
     margin-bottom: 80px;
+    color: #fff;
+    font-family: Montserrat;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    width: 411px;
+    height: 49px;
   }
 `;
 
@@ -203,11 +259,14 @@ const TextHero = styled.div`
   text-align: left;
   font-size: 10px;
 
-  @media (min-width: 768px) {
+  @media (min-width: 834px) {
+    gap: 34px;
     font-size: 14px;
+    display: flex;
   }
 
-  @media (min-width: 1200px) {
+  @media (min-width: 1440px) {
+    margin-top: 40px;
     font-size: 24px;
     display: flex;
   }
@@ -215,50 +274,65 @@ const TextHero = styled.div`
 
 const Description = styled.p`
   color: #fff;
-  font-family: "Montserrat";
-  font-size: 18px;
+  font-family: Montserrat;
+  font-size: 10px;
+  font-style: normal;
   font-weight: 500;
-  line-height: 1.5;
-  margin-right: 20px;
-  width: 250px;
+  line-height: normal;
+  width: 136px;
+  margin-bottom: 35px;
 
-  @media (min-width: 768px) {
-    font-size: 22px;
-    width: 300px;
+  @media (min-width: 834px) {
+    color: #fff;
+    text-align: right;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    width: 172px;
   }
 
-  @media (min-width: 1200px) {
+  @media (min-width: 1440px) {
     font-size: 24px;
     width: 400px;
   }
 `;
 
 const VerticalLine = styled.div`
-  width: 2px;
-  height: 80px;
-  background-color: #fff;
+  display: none;
 
-  @media (min-width: 768px) {
-    height: 100px;
+  @media (min-width: 834px) {
+    width: 2px;
+    height: 110px;
   }
 
-  @media (min-width: 1200px) {
+  @media (min-width: 1440px) {
+    width: 2px;
     height: 120px;
   }
 `;
 
 const Data = styled.p`
   color: #fff;
-  font-family: "Montserrat";
-  font-size: 18px;
-  font-weight: 600;
-  margin-left: 20px;
+  font-family: Montserrat;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  width: 69px;
 
-  @media (min-width: 768px) {
+  @media (min-width: 834px) {
     font-size: 22px;
+    color: #fff;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
   }
 
-  @media (min-width: 1200px) {
+  @media (min-width: 1440px) {
     font-size: 24px;
   }
 `;
@@ -269,17 +343,28 @@ const SearchForm = styled.form`
   align-items: center;
   position: relative;
 
-  @media (min-width: 768px) {
-    margin-top: 30px;
+  flex-shrink: 0;
+
+  @media (min-width: 834px) {
+    width: 402px;
+    height: 27px;
+    flex-shrink: 0;
+    margin-top: 64px;
+    margin-bottom: 0;
+  }
+  @media screen and (min-width: 1440px) {
+    margin-left: auto;
+    margin-right: auto;
   }
 `;
 
 const SearchInput = styled.input`
-  width: 153px;
-  height: 15px;
+  width: 174px;
+  height: 10px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   padding-top: 4px;
+  color: #d9d9d9;
   padding-bottom: 4px;
   padding-left: 10.4px;
   font-size: 6px;
@@ -295,21 +380,23 @@ const SearchInput = styled.input`
   &:active {
     outline: none;
   }
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 834px) {
     width: 373px;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     padding-top: 8px;
     padding-bottom: 6.6px;
     padding-left: 19px;
+    background: #d9d9d9;
     font-size: 10px;
     &::placeholder {
       font-size: 10px;
     }
   }
-  @media screen and (min-width: 1200px) {
+  @media screen and (min-width: 1440px) {
     width: 625px;
-    height: 40px;
+    height: 42px;
+    flex-shrink: 0;
     border-radius: 10px 0px 0px 10px;
     background: rgb(217, 217, 217);
     border: none;
@@ -323,8 +410,9 @@ const SearchInput = styled.input`
 
 const SearchButton = styled.button`
   background: #ffb36c;
-  width: 16px;
-  height: 23px;
+  width: 16.181px;
+  height: 17px;
+  flex-shrink: 0;
   border: none;
   outline: none;
   margin-left: 2px;
@@ -337,9 +425,9 @@ const SearchButton = styled.button`
     width: 9px;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 834px) {
     width: 29.4px;
-    height: 29px;
+    height: 25px;
     border-radius: 0 10px 10px 0;
 
     & img {
@@ -347,7 +435,7 @@ const SearchButton = styled.button`
     }
   }
 
-  @media (min-width: 1200px) {
+  @media (min-width: 1440px) {
     width: 50px;
     height: 40px;
     border-radius: 0px 10px 10px 0px;
@@ -400,7 +488,7 @@ const SearchDrop = styled.ul`
     }
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: 834px) {
     width: 100%;
     li {
       height: 35px;
@@ -414,7 +502,7 @@ const SearchDrop = styled.ul`
     }
   }
 
-  @media (min-width: 768px) and (max-width: 1199px) {
+  @media (min-width: 834px) and (max-width: 1440px) {
     width: calc(100% - 30px);
     li {
       height: 40px;
