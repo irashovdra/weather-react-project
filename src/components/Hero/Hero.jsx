@@ -1,10 +1,10 @@
-import React, { useState, useCallback, useEffect } from "react";
-import styled, { keyframes } from "styled-components";
-import SearchIcon from "../../img/svgs/search.svg";
-import heroBackground from "../../img/heroBackground.png";
+import styled from "styled-components"
+import heroBackground from "../../img/heroBackground.png"
 import loop from "../../img/svgs/loop.svg";
+import SearchIcon from "../../img/svgs/search.svg";
 import cities from "../../top-1000-cities.json";
 import { nanoid } from "nanoid";
+import { useState,useCallback,useEffect } from "react";
 
 const citiesNames = [];
 cities.map((item) => {
@@ -12,7 +12,9 @@ cities.map((item) => {
 });
 citiesNames.sort();
 
-const Hero = ({ setLocation, proc, proc2 }) => {
+
+
+export default function Hero({ setLocation, proc, proc2 }) {
   const currentDate = new Date();
   const weekdays = [
     "Sunday",
@@ -117,234 +119,148 @@ const Hero = ({ setLocation, proc, proc2 }) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    setLocation(e.target.elements.location.value);
   };
-
   return (
-    <HeroContainer>
-      <Overlay>
-        <Title>Weather dashboard</Title>
-        <TextHero>
-          <Description>
-            Create your personal list<br></br> of favorite cities and<br></br>
-            always be aware of the <br></br> weather.
-          </Description>
-          <VerticalLine />
-          <Data>
-            {months[currentDate.getMonth()]} {currentDate.getFullYear()}
-            <br />
-            {weekdays[currentDate.getDay()]}, {`${day}${suffix}`}
-          </Data>
-        </TextHero>
-        <SearchForm onSubmit={handleFormSubmit}>
-          {showDrop ? <SearchDrop>{drop(passedCities)}</SearchDrop> : null}
-          <SearchInput
-            type="text"
-            name="location"
-            placeholder="Search location..."
-            onFocus={(e) => {
-              setShowDrop(true);
-              e.target.closest("input").style.borderRadius = "10px 0px 0px 0px";
-            }}
-            onBlur={(e) => {
-              setTimeout(() => {
-                setShowDrop(false);
-                e.target.closest("input").style.borderRadius =
-                  "10px 0px 0px 10px";
-              }, 100);
-            }}
-            onInput={(e) => {
-              const q = e.target.value;
-              const tempArr = [];
-              citiesNames.map((city) => {
-                if (city.toLocaleLowerCase().includes(q.toLocaleLowerCase())) {
-                  tempArr.push(city);
-                }
-              });
-              setPassedCities(tempArr);
-            }}
-          />
-          <SearchButton type="submit">
-            <img src={SearchIcon} alt="Search icon" />
-          </SearchButton>
-        </SearchForm>
-      </Overlay>
-    </HeroContainer>
+    <HeroBlock>
+      <h2>Weather dashboard</h2>
+      <div>
+        <p>
+          Create your personal list <br />
+          of favorite cities and always <br /> be aware of the weather.
+        </p>
+        <span></span>
+        <p>
+          {months[currentDate.getMonth()]} {currentDate.getFullYear()}
+          <br />
+          {weekdays[currentDate.getDay()]}, {`${day}${suffix}`}
+        </p>
+      </div>
+      <SearchForm onSubmit={handleFormSubmit}>
+        {showDrop ? <SearchDrop>{drop(passedCities)}</SearchDrop> : null}
+        <SearchInput
+          type="text"
+          name="location"
+          placeholder="Search location..."
+          onFocus={(e) => {
+            setShowDrop(true);
+            e.target.closest("input").style.borderRadius = "10px 0px 0px 0px";
+          }}
+          onBlur={(e) => {
+            setTimeout(() => {
+              setShowDrop(false);
+              e.target.closest("input").style.borderRadius =
+                "10px 0px 0px 10px";
+            }, 100);
+          }}
+          onInput={(e) => {
+            const q = e.target.value;
+            const tempArr = [];
+            citiesNames.map((city) => {
+              if (city.toLocaleLowerCase().includes(q.toLocaleLowerCase())) {
+                tempArr.push(city);
+              }
+            });
+            setPassedCities(tempArr);
+          }}
+        />
+        <SearchButton type="submit">
+          <img src={SearchIcon} alt="Search icon" />
+        </SearchButton>
+      </SearchForm>
+    </HeroBlock>
   );
-};
+}
 
-export default Hero;
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
-const HeroContainer = styled.div`
-  width: 100%;
-  height: 223px;
-  flex-shrink: 0;
-  position: relative;
-  text-align: center;
-  color: white;
-  background: url(${heroBackground}) no-repeat center;
-  background-size: cover;
-
-  @media (min-width: 1440px) {
-    padding: 40px 0;
-    height: 445px;
-  }
-
-  @media (max-width: 834px) {
-    padding: 50px 0 100px;
+const HeroBlock = styled.section`
+    box-sizing: border-box;
+    color: white;
+    font-family: Montserrat;
+    background: url(${heroBackground}) no-repeat center;
     height: 345px;
-  }
-`;
-
-const Overlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(0, 0, 0, 0.5);
-`;
-
-const Title = styled.h1`
-  color: #fff;
-  font-family: Montserrat;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  animation: ${fadeIn} 1s ease-out;
-  margin-bottom: 35px;
-  @media (min-width: 834px) {
-    color: #fff;
-    font-family: Montserrat;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-    margin-bottom: 50px;
-  }
-
-  @media (min-width: 1440px) {
-    margin-bottom: 80px;
-    color: #fff;
-    font-family: Montserrat;
-    font-size: 40px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-    width: 411px;
-    height: 49px;
-  }
-`;
-
-const TextHero = styled.div`
-  animation: ${fadeIn} 1.2s ease-out;
-  font-weight: 500;
-  line-height: normal;
-  text-align: left;
-  font-size: 10px;
-
-  @media (min-width: 834px) {
-    gap: 34px;
-    font-size: 14px;
-    display: flex;
-  }
-
-  @media (min-width: 1440px) {
-    margin-top: 40px;
-    font-size: 24px;
-    display: flex;
-  }
-`;
-
-const Description = styled.p`
-  color: #fff;
-  font-family: Montserrat;
-  font-size: 10px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  width: 136px;
-  margin-bottom: 35px;
-
-  @media (min-width: 834px) {
-    color: #fff;
-    text-align: right;
-    font-family: Montserrat;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    width: 172px;
-  }
-
-  @media (min-width: 1440px) {
-    font-size: 24px;
-    width: 400px;
-  }
-`;
-
-const VerticalLine = styled.div`
-  display: none;
-
-  @media (min-width: 834px) {
-    width: 2px;
-    height: 110px;
-  }
-
-  @media (min-width: 1440px) {
-    width: 2px;
-    height: 120px;
-  }
-`;
-
-const Data = styled.p`
-  color: #fff;
-  font-family: Montserrat;
-  font-size: 10px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  width: 69px;
-
-  @media (min-width: 834px) {
-    font-size: 22px;
-    color: #fff;
-    font-family: Montserrat;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-  }
-
-  @media (min-width: 1440px) {
-    font-size: 24px;
-  }
+    background-size: cover;
+    padding: 50px 116px 100px;
+    div {
+      position: relative;
+      padding-left: 25px;
+      box-sizing: border-box;
+      width: 161px;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      gap: 20px;
+      margin-left: auto;
+      margin-right: auto;
+      align-items: left;
+      margin-bottom: 48px;
+    }
+    div > span {
+      height: 80px;
+      border: 1px solid #fff;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    h2 {
+      margin-bottom: 35px;
+      font-size: 14px;
+      font-weight: 600;
+      text-align: center;
+    }
+    p {
+      line-height: normal;
+      font-size: 10px;
+      font-weight: 500;
+    }
+    @media screen and (min-width: 834px) {
+      padding: 40px 211px;
+      h2 {
+        font-size: 20px;
+        margin-bottom: 40px;
+      }
+      p {
+        font-size: 14px;
+      }
+      div {
+        padding-right: 30px;
+        width: 407px;
+        padding-right: 71px;
+        justify-content: space-between;
+        padding-left: 0px;
+        flex-direction: row;
+      }
+      div > span {
+        position: relative;
+      height: 110px;
+    }
+    }
+    @media screen and (min-width: 1440px) {
+      padding: 100px 323px;
+      height: 595px;
+      h2 {
+        margin-bottom: 80px;
+        font-size: 40px;
+      }
+      p {
+          font-size: 24px;
+      }
+      div {
+        width: 713px;
+        padding-right: 116px;
+      }
+      div > span {
+        height: 144px;
+      }
+    }
 `;
 
 const SearchForm = styled.form`
-  margin-top: 30px;
   display: flex;
   align-items: center;
   position: relative;
-
   flex-shrink: 0;
-
+  width: 174px;
+  margin-left: auto;
+  margin-right: auto;
   @media (min-width: 834px) {
     width: 402px;
     height: 27px;
@@ -353,8 +269,11 @@ const SearchForm = styled.form`
     margin-bottom: 0;
   }
   @media screen and (min-width: 1440px) {
+    width: 625px;
     margin-left: auto;
     margin-right: auto;
+    padding-right: 60px;
+
   }
 `;
 
@@ -364,7 +283,7 @@ const SearchInput = styled.input`
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   padding-top: 4px;
-  color: #d9d9d9;
+  color: black;
   padding-bottom: 4px;
   padding-left: 10.4px;
   font-size: 6px;
@@ -396,7 +315,7 @@ const SearchInput = styled.input`
   @media screen and (min-width: 1440px) {
     width: 625px;
     height: 42px;
-    flex-shrink: 0;
+    flex-shrink: 0; 
     border-radius: 10px 0px 0px 10px;
     background: rgb(217, 217, 217);
     border: none;
@@ -410,17 +329,17 @@ const SearchInput = styled.input`
 
 const SearchButton = styled.button`
   background: #ffb36c;
-  width: 16.181px;
-  height: 17px;
+  width: 17px;
+  height: 18px;
   flex-shrink: 0;
   border: none;
   outline: none;
-  margin-left: 2px;
-  border-radius: 0 5px 5px 0;
+  border-radius: 0 10px 10px 0;
+  box-sizing: border-box;
+  padding: 1px;
   display: flex;
   align-items: center;
   justify-content: center;
-
   & img {
     width: 9px;
   }
@@ -437,7 +356,7 @@ const SearchButton = styled.button`
 
   @media (min-width: 1440px) {
     width: 50px;
-    height: 40px;
+    height: 41px;
     border-radius: 0px 10px 10px 0px;
     border: none;
     background: rgb(255, 179, 108);
@@ -445,7 +364,6 @@ const SearchButton = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
-
     & img {
       width: 25px;
     }
@@ -456,9 +374,9 @@ const SearchDrop = styled.ul`
   margin: 0;
   padding: 0;
   position: absolute;
-  top: 100%;
+  top: 127%;
   left: 0;
-  width: calc(100% - 50px);
+  width: 645px;
   background-color: #eaeaea;
   z-index: 99;
   border-radius: 0px 0px 10px 10px;
@@ -472,7 +390,7 @@ const SearchDrop = styled.ul`
     justify-content: left;
     align-items: center;
     color: #2b2b2b;
-    font-weight: bold;
+
     user-select: none;
     cursor: pointer;
 
@@ -487,32 +405,21 @@ const SearchDrop = styled.ul`
       margin-right: 10px;
     }
   }
-
-  @media (max-width: 834px) {
-    width: 100%;
-    li {
-      height: 35px;
-      font-size: 12px;
-      padding: 0px 10px;
-
-      img {
-        width: 14px;
-        height: 14px;
-      }
-    }
+  @media screen and (max-width: 1440px) {
+    width: 372px;
+    top: 95%;
+    font-size: smaller;
   }
-
-  @media (min-width: 834px) and (max-width: 1440px) {
-    width: calc(100% - 30px);
+  @media screen and (max-width: 834px) {
+    width: 157px;
+    font-size: xx-small;
     li {
-      height: 40px;
-      font-size: 14px;
-      padding: 0px 12px;
+      height: 20px;
+      padding: 0px 10px;
+    img {
+      width: 10px;
+      height: 10px;
 
-      img {
-        width: 16px;
-        height: 16px;
-      }
-    }
+    }}
   }
 `;
