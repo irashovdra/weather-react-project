@@ -91,6 +91,7 @@ const LogoContainer = styled.div`
   }
 
   @media (min-width: 1440px) {
+    margin-bottom: 0px;
     margin-left: 150px;
     width: 90px;
     height: 62px;
