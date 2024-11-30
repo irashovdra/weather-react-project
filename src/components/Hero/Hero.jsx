@@ -196,7 +196,7 @@ const HeroContainer = styled.div`
   background: url(${heroBackground}) no-repeat center;
   background-size: cover;
 
-  @media (max-width: 1440px) {
+  @media (min-width: 1440px) {
     padding: 40px 0;
     height: 445px;
   }
@@ -229,7 +229,7 @@ const Title = styled.h1`
   line-height: normal;
   animation: ${fadeIn} 1s ease-out;
   margin-bottom: 35px;
-   @media (min-width: 834px) {
+  @media (min-width: 834px) {
     color: #fff;
     font-family: Montserrat;
     font-size: 20px;
@@ -308,6 +308,7 @@ const VerticalLine = styled.div`
   }
 
   @media (min-width: 1440px) {
+    width: 2px;
     height: 120px;
   }
 `;
@@ -341,7 +342,7 @@ const SearchForm = styled.form`
   display: flex;
   align-items: center;
   position: relative;
-  
+
   flex-shrink: 0;
 
   @media (min-width: 834px) {
@@ -350,6 +351,10 @@ const SearchForm = styled.form`
     flex-shrink: 0;
     margin-top: 64px;
     margin-bottom: 0;
+  }
+  @media screen and (min-width: 1440px) {
+    margin-left: auto;
+    margin-right: auto;
   }
 `;
 
@@ -390,7 +395,8 @@ const SearchInput = styled.input`
   }
   @media screen and (min-width: 1440px) {
     width: 625px;
-    height: 40px;
+    height: 42px;
+    flex-shrink: 0;
     border-radius: 10px 0px 0px 10px;
     background: rgb(217, 217, 217);
     border: none;
@@ -421,7 +427,7 @@ const SearchButton = styled.button`
 
   @media (min-width: 834px) {
     width: 29.4px;
-    height: 29px;
+    height: 25px;
     border-radius: 0 10px 10px 0;
 
     & img {
